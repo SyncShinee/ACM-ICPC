@@ -1,0 +1,189 @@
+本轮题目主要摘选自
+
+2011 Michigan Invitational Programming Contest
+2013-2014 ACM-ICPC Northeastern European Regional Contest (NEERC 13)
+2013-2014 CT S01E01: Extended 2000 ACM-ICPC East Central North America Regional Contest (ECNA 2000)
+
+这些题目在 CF Gyms 里都可以找到。。。除此之外：
+
+D 题是 BZOJ 2242: [SDOI2011]计算器
+G 题是 http://www.spoj.com/problems/LPERMUT/
+
+
+
+A:
+
+。。二分图询问方案数。。。要充分挖掘左边节点度数至多为 2 这则限制条件。
+
+我们考察每个联通块的贡献。。
+
+用 dfs() 分解出二分图的每个联通块，设 a、b 分别为该联通块中左、右节点的个数。
+
+如果 a > b 那么必然无解。
+如果 a+1 == b，那么对方案数乘以 b。
+如果 a == b。。那么此时还要分两种情况讨论。。
+
+
+/*
+第一种是这样。。那么方案不变。。。
+1 2 3
+|/|/|
+1 2 3
+*/
+
+第二种是交叉的。。。那么方案乘以 2。。。
+而这只需要判断这则联通块中。。是否包含出度为 1 的左边节点。。。。
+
+
+B.
+
+求排列的逆序对。。。经典题。。
+
+可以用归并排序（参见算法导论）或者树状数组（自己在网上搜）。。。
+
+复杂度 O(nlogn)。。。
+
+C.
+我们记录每个 token 出现在了哪些记录中。。
+map<string, vector<int> > 
+枚举每个 token。。判断它可能的类型。。。而这只需要比较出现的次数就可以了。。
+
+D:
+
+前两问是比较基础的模算数。
+
+第三问是离散对数。。。需要大步小步算法（Baby-Step Giant-Step）。。。很经典的 Time-Space Trade-Off。。。
+http://en.wikipedia.org/wiki/Baby-step_giant-step
+
+a^x = b (mod p)
+朴素算法显然就是枚举 x。。复杂度 O(p)...
+。。考虑把 x 分解成。。  x = im+j
+这里 m = sqrt(p) 。。那么我们有。。
+
+// (a^m)^i * (a^j) = b
+// a^j = b / (a^m)^i
+
+我们先暴力处理 i = 0 的情况。。（baby-step)。。如果未找到。。我们就把所有 a^j 放进 hash 表。。
+。有了 hash 表。我们就可以一次跳 m 步了、、复杂度 O(sqrt(p))
+
+
+E.
+数据范围很小。。我们可以 O(n5) 暴力枚举。。
+
+
+F.
+签到题。。。。。直接按照题目要求写就可以了。。。
+
+
+G.
+
+
+尽量避免使用数据结构。。。需要充分利用排列的性质。。。
+如果区间 [l, r] 恰好是 1..len （len = r-l+1）的排列。。那么充分必要条件是：
+
+     1. [l, r] 区间的数两两不同。
+     2. s[r]-s[l+1] = 1+2+...+len。。。
+
+为了确保区间中的数字两两不同。。。我们设 l[i] 为 i 向左最长可以延伸的距离。。（边界设 l[0] = 0, l[n+1] = n+1。。）
+。。那么有 l[i] = max(l[i],  p[a[i]]+1)。。。（p[a[i]] 是上一个 a[i] 的位置。。。（也可以用 two point 得到这个东西。。。。
+
+void upd(int l, int r, int len){
+    if (len < ans) return;
+    if (::l[r] <= l && (s[r]-s[l-1])*2 == (1+len)*len) ans = len;
+}
+
+
+。序列被 1 分割成了一些小的区间。。（不能包含两个相同的 1。。。）。。
+ 
+____ 1 ____ 1 _________ 1 _____
+
+我们枚举每个 1.。。讨论区间中最大的数字 mx 出现在 1 的左边还是右边。。对称处理。。
+。。考虑左边。。
+
+        for (int j=i-1,mx=1;l[i]<=j;--j){
+            checkMax(mx, a[j]);
+            upd(j,j+mx-1,mx);
+        }
+
+由于 upd 过程是 O(1) 的。。所以整个算法是 O(n) 的。。。 
+
+
+H.
+
+我们考虑所有以 i 结尾的区间对答案的贡献。。。。
+
+。。。关键是注意到 xor 操作是复杂的。。而 and 操作时由规律可寻的。。
+
+一旦某个时刻某个位变成 0 之后。。。再往前都是 0 了。。。
+
+这样以 i 结尾不同的 and 值最多只有 32 个。。。我们处理出这 32 个区间。。
+
+对每个区间。。。用二分查找。。找出符合答案的 xor 值即可。。。
+
+
+
+//}/* .................................................................................................................................. */
+
+const int N = int(1e5) + 9, LV = 31;
+int pre[LV]; map<int, VI> X;
+int n;
+
+// (l, r]
+int f(VI& I, int l, int r){
+    return LBD(I, r) - LBD(I, l);
+}
+
+int main(){
+
+#ifndef ONLINE_JUDGE
+    freopen("in.txt", "r", stdin);
+    freopen("out.txt", "w", stdout);
+#else
+    freopen("hack.in", "r", stdin);
+    freopen("hack.out", "w", stdout);
+#endif
+
+    while (~scanf("%d", &n)){
+
+
+    LL z = 0; FLC(pre, -1); CLR(X); X[0].PB(-1); int ss = 0; REP_C(i, n){
+
+        int ai; RD(ai); VII I; REP(lv, LV){
+            if (!_1(ai, lv)) pre[lv] = i;
+            I.PB(MP(pre[lv], lv));
+        }
+
+        SRT(I); I.PB(MP(i, 0)); ss ^= ai; X[ss].PB(i);
+
+        DWN(i, LV, 0){
+            z += f(X[ss^ai],I[i].fi,I[i+1].fi);
+            //cout << z << " " << (ss^ai) << " "<<  I[i].fi << " " << I[i+1].fi << endl;
+            ai &= ~_1(I[i].se);
+        }
+
+        z += LBD(X[ss], I[0].fi);
+    }
+
+    OT(z);
+    }
+}
+
+
+
+
+I：
+由于要使A集合与B集合扩张成一个对减法封闭的Z，所以必须要有单位元 1 和 -1，进一步分析发现我们要判断出是否可以从A集合中可重复地取出 x 个数，从B集合中可重复地取出 x-1 或 x 个数，使得对于某些取法 sumA-sumB=1，某些取法 sumA-sumB=-1。
+
+显然答案与gcd(ai?bj)有关，设其值为g，则 g=1 时可以扩张成Z；由于还可以先往右边多走一步，则 g=2 且集合A中存在奇数时也可以扩张成Z（g=2 说明可以扩展成偶整数集合，此时只要集合A中有个奇数就可以扩张成Z）；但是对于 g>2 的情况却不行，这是因为此时扩张成 {...,-2g,-g,0,g,2g,...} 的集合，但又由于g=gcd(ai?bj)，所以ai≡bj(mod g)，令ai≡bj≡k(mod g)，则只能扩张成形如 mg+k 的集合。
+优化：
+
+gcd(ai?bj)可以简化为gcd(ai?a0,bi?b0,a0?b0)；
+根据此简化式，判断集合A中是否有奇数可以简化为判断a0是否为奇数；
+判断 maxA>minB 并且 maxB>minA
+
+（这题数据似乎弱了。。很多错误算法都通过了。。推荐对自己的算法有疑问的同学。。去原地址再提交一遍）
+2011 Michigan Invitational Programming Contest
+
+
+J：
+看懂题目要求。。。有一定空间几何的想象能力不难做出。。。。

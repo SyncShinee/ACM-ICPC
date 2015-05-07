@@ -1,0 +1,8 @@
+team1	E544F6	傅得强 步国超 胡健行	男	BJFU
+team2	J3S3G9	宋匡时 宋军帅 邹明哲	男	BJFU
+team3	3870S6	陈逸伦 王鹿鸣 张奥	男	BUAA
+team4	H3T6D6	董舒印 付成真 朱峰达	男	BUAA
+team5	78V0D9	李晨豪 户建坤 姜阳邦彦	男	BUAA
+team6	F1Y064	史烨轩	男	BUAA
+team7	G342F6	王骜 安康	男	BUAA
+team8	75G194	王剑锋	男	BUAA
