@@ -1,32 +1,53 @@
 #include <cstdio>
-#include <algorithm>
 #include <cstring>
+#include <algorithm>
 using namespace std;
+int C[N][2];
+int getSum(int x, int i) {
+	int ret = 0;
+	while (x) {
+		ret += C[x][i];
+		x -= x & -x;
+	}
+	return ret;
+}
+void update(int x, int y, int i) {
+	while (x <= n) {
+		C[x][i] += y;
+		x += x & -x;
+	}
+}
 int main() {
-	int cas = 0, n, t;
-	while (scanf("%d%d", &n, &t), n != -1 || t != -1) {
-		cas ++;
-		int sum1 = 0, sum2 = 0;
-		sum2 = n % 11;
-		while (n) {
-			sum1 += n % 10;
-			n /= 10;
-		}
-		for (int i = 0; i < t; ++i) {
-			int tmp = sum1, tag = 1, ad = 0;
-			while (tmp > 0) {
-				ad += tmp % 10;
-				tmp /= 10;
-				tag = -tag;
+	while (~scanf("%d", &n)) {
+		int sum = 0;
+		for (int i = 1; i <= n; ++ i) {
+			scanf("%d%d", &p[i].op, &p[i].l);
+			if (p[i].op == 0) {
+				++ sum;
+				p[i].r = p[i].l + sum;
+				opt[sum] = i;	
 			}
-			sum2 = ((sum2 * tag + sum1 % 11) % 11 + 11) % 11;
-			sum1 += ad;
 		}
-		printf("Case #%d: ", cas);
-		if (sum2 == 0)
-			puts("Yes");
-		else {
-			puts("No");
+		len_hs = 1;
+		for (int i = 1; i <= sum; ++ i) {
+			hs[len_hs++] = p[opt[i]].l;
+			hs[len_hs++] = p[opt[i]].r;
+		}
+		sort(hs + 1, hs + len_hs);
+		len_hs = unique(hs + 1, hs + len_hs) - hs;
+		num = 0;
+		for (int i = 1; i <= n; ++ i) {
+			int x = lower_bound(hs + 1, hs + len_hs, p[i].l) - hs, y = lower_bound(hs + 1, hs + len_hs, p[i].r);
+			if (p[i].op == 0) {
+				printf("%d\n", num - getSum(x - 1, 0) - getSum(len_hs - 1, 1) + getSum(y, 1));
+				num ++;
+				update(x, 1, 0);
+				update(y, 1, 1);
+			}
+			else {
+				update(x, -1, 0);
+				update(y, -1, 1);
+			}
 		}
 	}
 	return 0;
