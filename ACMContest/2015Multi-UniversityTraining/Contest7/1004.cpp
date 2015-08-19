@@ -2,6 +2,9 @@
 #include <cstring>
 #include <algorithm>
 using namespace std;
+struct node {
+	
+}p[N];
 int C[N][2];
 int getSum(int x, int i) {
 	int ret = 0;
