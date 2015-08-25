@@ -40,6 +40,8 @@ int main() {
         y /= 3;
         printf("begin\n");
         exgcd(x, y, a, b);
+        a = (a % y + y) % y;
+        b = (p - a * x) / y;
         a *= p, b *= p;
         printf("---%lld %lld\n",a, b);
         a = (a % y + y) % y;
