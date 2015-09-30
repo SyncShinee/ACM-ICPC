@@ -76,7 +76,7 @@ int main() {
             }
             ans = (ans + f[sr][sb][sg]) % MOD;
         }
-        // printf("%d %d\n", x, quick_inverse(m + 1, MOD));
+         printf("%d %d\n", ans);
         ans = ans * quick_inverse(m+1, MOD) % MOD;
         printf("%d\n", ans);
     }
