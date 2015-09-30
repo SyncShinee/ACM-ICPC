@@ -13,4 +13,5 @@ int main() {
 		sum += ans;
 		printf("%lld %lld\n",i, sum);
 	}
+	return 0;
 }
