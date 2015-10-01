@@ -80,7 +80,7 @@ int main() {
 	for (int i = 0; 1 << i < N; ++i)
         LOG[1 << i] = i;
     for (int i = 2; i < N; ++i)
-        if (!LOG[i]) LOG[i] = LOG[i - 1]; 
+        if (!LOG[i]) LOG[i] = LOG[i - 1];
 	while (~scanf("%d", &n)) {
 		memset(C, 0, sizeof C);
 		memset(Ci, 0, sizeof Ci);
