@@ -8,7 +8,7 @@
 #define PB push_back
 using namespace std;
 const int N = 512, M = 100010, NM = 1024, STOPVALVE = 0, INTERSECTION = 1;
-const double EPS = 1e-9;
+const double EPS = 1e-8;
 struct Point {
     double x, y;
     int type;
@@ -222,6 +222,7 @@ double solve() {
     for (int i = 0; i < n; ++ i) {
         sum += dist(line[i].st, line[i].ed);
     }
+    printf("%f\n", sum);
     return sum - bfs2();
 }
 int main() {

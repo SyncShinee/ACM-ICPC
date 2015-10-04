@@ -41,8 +41,11 @@ void dfs(int x, int pre) {
     }
 }
 int main() {
-    freopen("in.txt", "r", stdin);
+    //freopen("1003.in", "r", stdin);
+    //freopen("out.txt", "w", stdout);
+    //int cas = 0;
     while (~scanf("%d", &n)) {
+        //printf("%d\n", ++cas);
         memset(head, -1, sizeof head);
         side = 0;
         memset(num, 0, sizeof num);
@@ -83,9 +86,9 @@ int main() {
         }
         int ans = 0;
         for (int k = 1; k <= n; ++ k) {
-            for (int i = 0; i <= k; ++ i) num_cir[i] = 0;
             bool flag = false;
             if (n % k) continue;
+            for (int i = 0; i <= k; ++ i) num_cir[i] = 0;
             sum_cir[0] = subtree_size[0] % k;
             num_cir[sum_cir[0]] ++;
             for (int i = 1; i < len_cir; ++ i) {
