@@ -187,14 +187,21 @@ double bfs2() {
     while (!q.empty()) {
         int u = q.front();
         q.pop();
-        //printf("dfs2----%d-%f %f\n", u, p[u].x, p[u].y);
-        if (vis[u] == 1) continue;
+        printf("dfs2----%d-%f %f\n", u, p[u].x, p[u].y);
+//        if (vis[u] == 1) continue;
         //printf("111");
         for (int i = 0; i < gra[u].size(); ++ i) {
             int v = gra[u][i];
             //printf("%d %d\n", u, v);
-            if (vis[v] < 2) {
-                if (vis[v] == 0) vis[v] = 2;
+            if (vis[v] != 2) {
+                //if (vis[v] == 0) vis[v] = 2;
+                if (vis[u] == 3) {
+                    if (vis[v] == 1) continue;
+                    vis[v] = 2;
+                }
+                else {
+                    vis[v] = vis[v] == 1 ? 3 : 2;
+                }
                 q.push(v);
                 ret += dist(p[u], p[v]);
             }

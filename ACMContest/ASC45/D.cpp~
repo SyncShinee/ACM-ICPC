@@ -1,0 +1,12 @@
+#include <cstdio>
+#include <algorithm>
+
+using namespace std;
+int p,q;
+int main()
+{
+  freopen();
+  freopen();
+  scanf("%d %d",&p,&q);
+  
+}
