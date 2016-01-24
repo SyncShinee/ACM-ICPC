@@ -1,0 +1,26 @@
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+#include <bitset>
+bitset<128> C[N];
+
+bitset<128> getsum(int x) {
+    bitset<128> ret;
+    ret.reset();
+    while (x) {
+	ret ^= C[x];
+	x -= x & -x;
+    }
+    return ret;
+}
+
+void update(int x, int k) {
+    while (x <= n) {
+	C[x] ^= (1 << k);
+	x += x & -x;
+    }
+}
+
+int main() {
+    return 0;
+}
