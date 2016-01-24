@@ -4,10 +4,12 @@
 #include <cstring>
 #include <map>
 #include <queue>
+#include <ctype.h>
 #define N 30010
 #define INF 1000000000
 using namespace std;
 
+const int MSIZE = 65536;
 struct edge {
 	int to, val, next;
 }e[N << 1];
@@ -133,15 +135,38 @@ void solve_subproblem(int x) {
 	}
 }
 
+struct Reader {
+	char buffer[MSIZE], c;
+	int l, r;
+	Reader(): l(0), r(0) {}
+	char readchar() {
+		if (l == r) {
+			l = 0;
+			r = fread(buffer, 1, MSIZE, stdin);
+		}
+		return buffer[l++];
+	}
+	int read() {
+		c = readchar();
+		while (!isdigit(c)) c = readchar();
+		int res = 0;
+		while (isdigit(c)) res = res * 10 + c - '0', c = readchar();
+		return res;
+	}
+}R;
+
 int main() {
 	int T, x, y, z;
-	scanf("%d", &T);
+	//scanf("%d", &T);
+	T = R.read();
 	while (T--) {
-		scanf("%d%d%d", &n, &m, &k);
+		//scanf("%d%d%d", &n, &m, &k);
+		n = R.read(), m = R.read(), k = R.read();
 		for (int i = 1; i <= n; ++i)
 			gra[i].clear();
 		for (int i = 0; i < m; ++i) {
-			scanf("%d%d%d", &x, &y, &z);
+			//scanf("%d%d%d", &x, &y, &z);
+			x = R.read(), y = R.read(), z = R.read();
 			gra[x].push_back(make_pair(y, z));
 			gra[y].push_back(make_pair(x, z));
 		}
