@@ -1,0 +1,15 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <vector>
+
+using namespace std;
+
+const int maxn = 5e5 + 100;
+int fa[maxn], num[maxn];
+
+int main() {
+    freopen("c.txt", "r", stdin);
+    
+    return 0;
+}

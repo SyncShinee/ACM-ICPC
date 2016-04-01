@@ -1,0 +1,94 @@
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+#include <vector>
+#include <stack>
+using namespace std;
+const int N = 100010;
+int n, m;
+int vis[N], dfn[N], low[N], now, num, size[N], idx[N];
+vector <int> gra[N];
+stack<int> sta;
+int ans[N], hi, lw;
+bool flag;
+void tarjan(int x, int deep) {
+    if (flag) {
+        return;
+    }
+    vis[x] = 2;
+    dfn[x] = low[x] = deep;
+    ans[deep] = x;
+    sta.push(x);
+    for (int i = 0; i < gra[x].size(); ++ i) {
+        if (vis[gra[x][i]] == 0) {
+            tarjan(gra[x][i], deep + 1);
+            low[x] = min(low[gra[x][i]], low[x]);
+        }
+        else if (vis[gra[x][i]] == 2) {
+            low[x] = min(dfn[gra[x][i]], low[x]);
+            if (!((dfn[gra[x][i]] - dfn[x]) & 1)) {
+                lw = dfn[gra[x][i]];
+                hi = dfn[x];
+                flag = true;
+                return;
+            }
+        }
+    }
+    if (low[x] == dfn[x]) {
+        num ++;
+        while (1) {
+            int t = sta.top();
+            idx[t] = num;
+            vis[t] = 1;
+            sta.pop();
+            size[num] ++;
+            if (t == x) {
+                break;
+            }
+        }
+    }
+}
+int main(){
+    //freopen("g.txt", "r", stdin);
+    int T, x, y;
+    scanf("%d", &T);
+    while(T --){
+        scanf("%d%d", &n, &m);
+        for (int i = 1; i <= n; ++ i) {
+            gra[i].clear();
+        }
+        memset(vis, 0, sizeof vis);
+        memset(low, 0, sizeof low);
+        memset(size, 0, sizeof size);
+        memset(idx, 0, sizeof idx);
+        memset(dfn, 0, sizeof dfn);
+        while (!sta.empty()) {
+            sta.pop();
+        }
+        now = num = 0;
+        flag = false;
+        for (int i = 0; i < m; ++ i) {
+            scanf("%d%d", &x, &y);
+            gra[x].push_back(y);
+        }
+        for (int i = 1; i <= n; ++ i) {
+            if (vis[i] == 0) {
+                tarjan(i, 0);
+                if (flag) {
+                    break;
+                }
+            }
+        }
+        if (flag) {
+            puts("1");
+            printf("%d\n", hi - lw + 1);
+            for (int i = lw; i <= hi; ++ i) {
+                printf("%d\n", ans[i]);
+            }
+        }
+        else {
+            puts("-1");
+        }
+    }
+    return 0;
+}

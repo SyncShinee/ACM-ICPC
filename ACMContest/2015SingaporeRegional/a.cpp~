@@ -1,0 +1,13 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+const int maxn = 200 * 200;
+
+int main() {
+    freopen("a.txt", "r", stdin);
+    
+    return 0;
+}

@@ -1,0 +1,15 @@
+#include <iostream>
+#include <cstdio>
+#include <cmath>
+#incldue <cstring>
+
+using namespace std;
+
+const int maxn = 1000 + 100;
+const double k = 1e6;
+
+int main() {
+    freopen("k.txt", "r", stdin);
+    
+    return 0;
+}
