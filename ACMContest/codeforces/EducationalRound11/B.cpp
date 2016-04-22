@@ -1,0 +1,33 @@
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+using namespace std;
+const int N = 128;
+int a[N][4];
+int main() {
+    int n, m;
+    scanf("%d%d", &n, &m);
+    int tot = 0;
+    for (int i = 1; i <= n && tot < m; ++ i) {
+	a[i][1] = ++ tot;
+	if (tot == m) break;
+	a[i][3] = ++ tot;
+	if (tot == m) break;
+    }
+    for (int i = 1; i <= n && tot < m; ++ i) {
+	a[i][0] = ++ tot;
+	if (tot == m) break;
+	a[i][2] = ++ tot;
+	if (tot == m) break;
+    }
+    tot = 0;
+    for (int i = 1; i <= n; ++ i) {
+	for (int j = 0; j < 4; ++ j) {
+	    if (a[i][j] > 0) {
+		tot ++;
+		printf("%d%c", a[i][j], " \n"[tot == m]);
+	    }
+	}
+    }
+    return 0;
+}
