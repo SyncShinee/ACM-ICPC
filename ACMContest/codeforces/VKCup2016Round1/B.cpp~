@@ -1,0 +1,28 @@
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+using namespace std;
+int main() {
+    scanf("%d%d%d", &n, &d, &h);
+    if (h + h < d || d >= n) {
+	puts("-1");
+	return 0;
+    }
+    int nw = 1;
+    tot = 1;
+    for (int i = 0; i < h; ++ i) {
+	tot ++;
+	printf("%d %d\n", nw, tot);
+	nw = tot;
+    }
+    nw = 1;
+    for (int i = 0; i < d - h; ++ i) {
+	tot ++;
+	printf("%d %d\n", nw, tot);
+	nw = tot;
+    }
+    for (int i = tot + 1; i <= n; ++ i) {
+	printf("%d %d\n", 1, i);
+    }
+    return 0;
+}

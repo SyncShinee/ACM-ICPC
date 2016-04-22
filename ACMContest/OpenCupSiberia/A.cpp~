@@ -1,0 +1,56 @@
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include <algorithm>
+using namespace std;
+const int N = 256;
+bool invalid[N];
+vector <int> gra[N];
+bool dfs(int x, int pre) {
+    vis[x] = vis[pre] ^ 1;
+    for (int i = 0; i < gra[x].size(); ++ i) {
+	if (vis[gra[x][i]] != -1) {
+	    if (vis[gra[x][i]] != vis[x] ^ 1) return false;
+	}
+	else {
+	    if (!dfs(gra[x][i], x)) return false;
+	}
+    }
+    return true;
+}
+bool judge() {
+    memset(vis, -1, sizeof vis);
+    vis[0] = 0;
+    for (int i = 1; i <= n; ++ i) {
+	if (vis[i] == -1) {
+	    if (!dfs(i, 0)) return false;
+	}
+    }
+    return true;
+}
+int main() {
+    int len, x;
+    freopen("input.txt", "r", stdin);
+    //freopen("output.txt", "w",stdout);
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++ i) {
+	scanf("%d", &len);
+	for (int j = 0; j < len; ++ j) {
+	    scanf("%d", &x);
+	    gra[i].push_back(x);
+	    gra[x].push_back(i);
+	}
+    }
+    for (int i = 1; i <= n; ++ i) {
+	invalid[i] = true;
+	for (int j = i + 1; j <= n; ++ j) {
+	    invalid[j] = true;
+	    if (judge()) {
+		puts("Hurrah!");
+		return 0;
+	    }
+	}
+    }
+    puts("Fired.");
+    return 0;
+}

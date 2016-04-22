@@ -1,0 +1,13 @@
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    scanf("%d", &n);
+    for (int i = 0; i < n; ++ i) {
+	a[i] = i;
+    }
+    random_shuffle(a, a + n);
+    
+    return 0;
+}

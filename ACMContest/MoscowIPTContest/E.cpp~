@@ -1,0 +1,33 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+type long long ll;
+
+const int maxn = 3e3 + 100;
+const int M = 1e9 + 7.1;
+
+int add(int a, int b) {
+    int c = a + b;
+    if(c >= M)
+	c -= M;
+    return c;
+}
+int pow_mod(int x, int n) {
+    int res = 1, tmp = x % M;
+    while(n) {
+	if(n & 1) {
+	    res = (ll)res * (ll)tmp % M;
+	}
+	tmp = (ll)tmp * (ll)tmp % M;
+	n >>= 1;
+    }
+}
+
+int main() {
+    freopen("E.txt", "r", stdin);
+    
+    return 0;
+}

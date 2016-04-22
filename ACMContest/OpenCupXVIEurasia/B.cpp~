@@ -1,0 +1,23 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <string>
+#include <cmath>
+#include <map>
+#include <vector>
+
+using namespace std;
+
+const int maxn =  1e6 + 100;
+
+map<string, int> mp;
+int r[maxn], p[maxn], pn;
+vector<int> G[maxn];
+
+
+
+int main() {
+    freopen("B.txt", "r", stdin);
+    
+    return 0;
+}
