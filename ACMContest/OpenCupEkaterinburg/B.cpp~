@@ -1,0 +1,29 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+const int maxn = 1e5 + 100;
+const int M = 1e9 + 7.1;
+int f[maxn], s[maxn];
+
+void solve() {
+    s[0] = 1;
+    f[0] = 1;
+    for(int i = 1; i <= 100000; i++) {
+	int t = i / 2;
+	f[i] = s[t];
+	s[i] = (s[i - 1] + f[i]) % M;
+    }
+}
+
+int main() {
+    freopen("B.txt", "r", stdin);
+    solve();
+    int n;
+    while(scanf("%d", &n) != EOF) {
+	printf("%d\n", f[n]);
+    }
+    return 0;
+}
