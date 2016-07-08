@@ -1,11 +1,13 @@
 #include <cstdio>
 #include <cstring>
 #include <algorithm>
-#include <cmath>
-#include <set>
-#include <map>
 using namespace std;
+const int N = 100010;
 int main() {
-    
+    int T;
+    scanf("%d", &T);
+    while (T --) {
+        
+    }
     return 0;
 }
